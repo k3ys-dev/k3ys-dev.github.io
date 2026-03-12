@@ -3,38 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K3YS Logo</title>
+    <title>k3ys — The Identity Standard for Web3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: sans-serif;
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --pink-hot: #D9218D;
+            --pink-deep: #B81A78;
+            --purple-mid: #69368E;
+            --purple-blue: #3948A1;
+            --blue-core: #1F6EB9;
+            --blue-bright: #207DBF;
+            --cyan-brand: #0B8BBA;
+            --cyan-deep: #0085B3;
+            --dark: #0A0A18;
+            --dark-card: #100F22;
+            --dark-card-border: rgba(105, 54, 142, 0.15);
+            --gray-dim: #8B8BA3;
+            --gray-light: #C4C4D4;
+            --white: #F0F0FF;
         }
 
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
             min-height: 100vh;
-            background-color: #1a1a2e;
-            padding: 20px;
-            box-sizing: border-box;
         }
 
-        .logo {
-            max-width: 100%;
-            max-height: 90vh;
-            height: auto;
-            display: block;
+        .circuit-bg {
+            position: fixed; inset: 0; z-index: 0;
+            overflow: hidden; pointer-events: none;
+        }
+        .circuit-bg::before {
+            content: '';
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background:
+                radial-gradient(ellipse at 15% 50%, rgba(217,33,141,0.1) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 30%, rgba(57,72,161,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 60%, rgba(11,139,186,0.1) 0%, transparent 55%);
+            animation: drift 25s ease-in-out infinite alternate;
+        }
+        @keyframes drift {
+            0% { transform: translate(0,0) rotate(0deg); }
+            100% { transform: translate(-2%,1.5%) rotate(0.5deg); }
+        }
+        .circuit-bg::after {
+            content: ''; position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(11,139,186,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(11,139,186,0.025) 1px, transparent 1px);
+            background-size: 64px 64px;
+        }
+
+        .node {
+            position: absolute; width: 4px; height: 4px;
+            border-radius: 50%; opacity: 0;
+            animation: pulse-node 5s ease-in-out infinite;
+        }
+        .node.pink { background: var(--pink-hot); }
+        .node.blue { background: var(--blue-bright); }
+        .node.cyan { background: var(--cyan-brand); }
+        .node:nth-child(1){top:12%;left:8%;animation-delay:0s}
+        .node:nth-child(2){top:22%;left:88%;animation-delay:1.5s}
+        .node:nth-child(3){top:55%;left:15%;animation-delay:2.8s}
+        .node:nth-child(4){top:70%;left:75%;animation-delay:.6s}
+        .node:nth-child(5){top:38%;left:52%;animation-delay:3.5s}
+        .node:nth-child(6){top:82%;left:35%;animation-delay:1.2s}
+        .node:nth-child(7){top:8%;left:65%;animation-delay:2.2s}
+        .node:nth-child(8){top:48%;left:92%;animation-delay:.3s}
+        .node:nth-child(9){top:90%;left:80%;animation-delay:4s}
+        @keyframes pulse-node {
+            0%,100% { opacity:0; transform:scale(1); box-shadow:none; }
+            50% { opacity:.5; transform:scale(2); box-shadow:0 0 10px 3px currentColor; }
+        }
+
+        .content { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:0 24px; }
+
+        /* HERO */
+        .hero {
+            min-height:100vh; display:flex; flex-direction:column;
+            justify-content:center; align-items:center; text-align:center;
+            padding:60px 0 80px;
+        }
+        .logo-img {
+            width: min(400px, 80vw); height: auto;
+            margin-bottom: 44px; border-radius: 16px;
+            filter: drop-shadow(0 8px 40px rgba(217,33,141,0.2))
+                   drop-shadow(0 4px 20px rgba(11,139,186,0.15));
+            animation: fadeUp 1s ease-out .2s both;
+        }
+        .hero-badge {
+            display:inline-flex; align-items:center; gap:8px;
+            padding:6px 18px; border:1px solid rgba(217,33,141,0.3);
+            border-radius:100px; font-family:'JetBrains Mono',monospace;
+            font-size:12px; letter-spacing:2px; text-transform:uppercase;
+            color:var(--pink-hot); margin-bottom:32px;
+            animation: fadeUp 1s ease-out .4s both;
+        }
+        .hero-badge::before {
+            content:''; width:6px; height:6px; background:var(--pink-hot);
+            border-radius:50%; animation:blink 2s ease-in-out infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+        .hero h1 {
+            font-size:clamp(2.2rem,5.5vw,3.8rem); font-weight:800;
+            line-height:1.1; margin-bottom:24px;
+            animation: fadeUp 1s ease-out .6s both;
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--pink-hot), var(--purple-mid), var(--blue-core), var(--cyan-brand));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        .hero p {
+            font-size:clamp(1rem,2vw,1.2rem); font-weight:300;
+            color:var(--gray-light); max-width:560px; line-height:1.7;
+            margin-bottom:48px; animation: fadeUp 1s ease-out .8s both;
+        }
+        .hero-contact {
+            animation: fadeUp 1s ease-out 1s both;
+            display:flex; flex-direction:column; align-items:center; gap:12px;
+        }
+        .hero-contact a {
+            display:inline-flex; align-items:center; gap:8px;
+            padding:14px 36px; border:1px solid rgba(217,33,141,0.4);
+            border-radius:10px; color:var(--white); text-decoration:none;
+            font-weight:600; font-size:15px; letter-spacing:.3px;
+            transition:all .3s;
+            background:linear-gradient(135deg, rgba(217,33,141,0.08), rgba(11,139,186,0.08));
+        }
+        .hero-contact a:hover {
+            border-color:var(--pink-hot);
+            background:linear-gradient(135deg, rgba(217,33,141,0.15), rgba(11,139,186,0.15));
+            transform:translateY(-2px);
+            box-shadow:0 8px 30px rgba(217,33,141,0.15);
+        }
+        .hero-contact span { font-size:13px; color:var(--gray-dim); }
+
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(24px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+
+        /* FEATURES */
+        .features { padding:100px 0 120px; }
+        .section-label {
+            font-family:'JetBrains Mono',monospace; font-size:11px;
+            letter-spacing:3px; text-transform:uppercase;
+            color:var(--cyan-brand); margin-bottom:16px;
+        }
+        .section-title {
+            font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:700;
+            margin-bottom:16px; line-height:1.2;
+        }
+        .section-subtitle {
+            font-size:1.05rem; font-weight:300; color:var(--gray-light);
+            max-width:520px; line-height:1.6; margin-bottom:56px;
+        }
+        .features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+
+        .feature-card {
+            background:linear-gradient(160deg, rgba(16,15,34,0.95), rgba(16,15,34,0.6));
+            border:1px solid var(--dark-card-border); border-radius:16px;
+            padding:36px 28px; transition:border-color .4s, transform .3s, box-shadow .4s;
+        }
+        .feature-card:hover { transform:translateY(-4px); }
+        .feature-card:nth-child(1):hover { border-color:rgba(217,33,141,0.3); box-shadow:0 16px 48px rgba(217,33,141,0.08); }
+        .feature-card:nth-child(2):hover { border-color:rgba(57,72,161,0.35); box-shadow:0 16px 48px rgba(57,72,161,0.08); }
+        .feature-card:nth-child(3):hover { border-color:rgba(11,139,186,0.3); box-shadow:0 16px 48px rgba(11,139,186,0.08); }
+
+        .feature-icon {
+            width:48px; height:48px; border-radius:12px;
+            display:flex; align-items:center; justify-content:center;
+            margin-bottom:20px; font-size:22px;
+        }
+        .feature-icon.pink { background:rgba(217,33,141,0.12); }
+        .feature-icon.purple { background:rgba(57,72,161,0.12); }
+        .feature-icon.cyan { background:rgba(11,139,186,0.12); }
+
+        .feature-card h3 { font-size:1.1rem; font-weight:600; margin-bottom:10px; }
+        .feature-card p { font-size:.9rem; font-weight:300; color:var(--gray-dim); line-height:1.6; }
+
+        /* STATS */
+        .stats {
+            display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+            margin-bottom:120px; border-radius:16px; overflow:hidden;
+        }
+        .stat { background:var(--dark-card); padding:40px 24px; text-align:center; }
+        .stat-number { font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; margin-bottom:8px; }
+        .stat:nth-child(1) .stat-number {
+            background:linear-gradient(135deg, var(--pink-hot), var(--purple-mid));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        .stat:nth-child(2) .stat-number {
+            background:linear-gradient(135deg, var(--purple-blue), var(--blue-core));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        .stat:nth-child(3) .stat-number {
+            background:linear-gradient(135deg, var(--blue-bright), var(--cyan-brand));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        .stat-label { font-size:.85rem; color:var(--gray-dim); font-weight:300; }
+
+        /* FOOTER */
+        footer {
+            border-top:1px solid var(--dark-card-border); padding:40px 0;
+            display:flex; justify-content:space-between; align-items:center;
+            flex-wrap:wrap; gap:16px;
+        }
+        footer .brand {
+            font-weight:700; font-size:1.1rem;
+            background:linear-gradient(135deg, var(--pink-hot), var(--cyan-brand));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        footer .copyright { font-size:.8rem; color:var(--gray-dim); }
+        footer a { color:var(--cyan-brand); text-decoration:none; font-size:.85rem; transition:color .3s; }
+        footer a:hover { color:var(--pink-hot); }
+
+        .brand-bar {
+            height:3px; margin-top:40px;
+            background:linear-gradient(90deg, var(--pink-hot), var(--purple-mid), var(--blue-core), var(--cyan-brand));
+        }
+
+        @media (max-width:768px) {
+            .features-grid { grid-template-columns:1fr; }
+            .stats { grid-template-columns:1fr; }
+            .hero { padding:40px 0 60px; }
+            .logo-img { width:min(280px,80vw); margin-bottom:32px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="k3ys-icon.jpg" alt="K3YS Security Logo" class="logo">
+    <div class="circuit-bg">
+        <div class="node pink"></div><div class="node blue"></div><div class="node cyan"></div>
+        <div class="node pink"></div><div class="node cyan"></div><div class="node blue"></div>
+        <div class="node pink"></div><div class="node cyan"></div><div class="node blue"></div>
     </div>
 
+    <div class="content">
+
+        <section class="hero">
+            <img src="k3ys-icon.jpg" alt="k3ys" class="logo-img">
+            <div class="hero-badge">Building in Progress</div>
+            <h1><span class="gradient-text">The Identity Standard</span><br>for Web3</h1>
+            <p>Seamless, agnostic authentication infrastructure for the next billion users. One platform to authenticate them all — invisible to users, indispensable to enterprises.</p>
+            <div class="hero-contact">
+                <a href="mailto:info@k3ys.dev">Get in Touch →</a>
+                <span>Launching soon. Stay tuned.</span>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="section-label">What We're Building</div>
+            <h2 class="section-title">Web3 authentication,<br>without the Web3 friction.</h2>
+            <p class="section-subtitle">We're removing the onboarding wall that kills 60% of users before they even start. Enterprise-grade identity infrastructure that just works.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon pink">🌐</div>
+                    <h3>Universal Identity</h3>
+                    <p>Users sign in with any Identity Provider they already trust — Google, Apple, enterprise SSO. No seed phrases. No extensions. No friction.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon purple">⚡</div>
+                    <h3>Invisible Blockchain</h3>
+                    <p>Our platform handles wallet creation, gas fees, and transaction signing entirely in the background. Users never see the blockchain.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon cyan">🔒</div>
+                    <h3>Enterprise-Grade Security</h3>
+                    <p>Smart account architecture with account abstraction, co-signing, and institutional-grade key management. Built for enterprises, not just crypto natives.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">4.4B</div>
+                <div class="stat-label">Digital wallet users we're building for</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">60%+</div>
+                <div class="stat-label">Users lost at the wallet connection step</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">$0.08</div>
+                <div class="stat-label">Total cost per authenticated transaction</div>
+            </div>
+        </div>
+
+        <footer>
+            <span class="brand">k3ys</span>
+            <span class="copyright">© 2026 k3ys. All rights reserved.</span>
+            <a href="mailto:[email]">Contact Us</a>
+        </footer>
+        <div class="brand-bar"></div>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.feature-card, .stat, .section-label, .section-title, .section-subtitle').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
